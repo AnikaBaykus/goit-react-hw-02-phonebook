@@ -5,8 +5,8 @@ import Section from './Section';
 import React, { Component } from 'react';
 import Container from './Container';
 import ContactForm from './ContactForm';
-import ContactList from './ContactList/ContactList';
-// import PropTypes from 'prop-types';
+import ContactList from './ContactList';
+import Filter from './Filter';
 
 export class App extends Component {
   static defaultProps = {
@@ -16,10 +16,12 @@ export class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
+    filter: '',
   };
 
   state = {
     contacts: this.props.contacts,
+    filter: this.props.filter,
   };
 
   submitFormHandler = ({ name, number }) => {
@@ -35,14 +37,25 @@ export class App extends Component {
     }));
   };
 
+  filterChange = event => {
+    this.setState({
+      filter: event.currentTarget.value,
+    });
+  };
+
   render() {
+    const normalizedFilter = this.state.filter.toLowerCase();
+    const filteredContact = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
     return (
       <Container>
         <Section title="Phonebook">
           <ContactForm onSubmit={this.submitFormHandler} />
         </Section>
         <Section title="Contacts">
-          <ContactList contacts={this.state.contacts} />
+          <Filter value={this.state.filter} onChange={this.filterChange} />
+          <ContactList contacts={filteredContact} />
         </Section>
       </Container>
     );
@@ -50,3 +63,5 @@ export class App extends Component {
 }
 
 export default App;
+
+// value={value} onChange={onChange}
