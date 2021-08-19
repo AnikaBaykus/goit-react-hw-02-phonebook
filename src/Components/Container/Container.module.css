@@ -1,0 +1,12 @@
+.container {
+  width: 320px;
+  padding: 20px;
+  margin: 0 auto;
+
+  border-radius: 5px;
+  box-shadow: -3px -3px #dcdcdc inset;
+  background-color: #f5fffa;
+
+  text-align: center;
+  font-family: 'Roboto';
+}
