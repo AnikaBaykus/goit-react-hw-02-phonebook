@@ -36,8 +36,8 @@ export class App extends Component {
 
     const { contacts } = this.state;
     const findCopyContact = contacts
-      .map(contact => contact.name)
-      .includes(name);
+      .map(contact => contact.name.toLowerCase())
+      .includes(name.toLowerCase());
 
     if (findCopyContact) {
       alert(`${name} is already in contacts.`);
