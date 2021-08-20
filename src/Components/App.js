@@ -26,15 +26,25 @@ export class App extends Component {
 
   submitFormHandler = ({ name, number }) => {
     const idContact = uuidv4();
+
     const contact = {
       name: name,
       number: number,
       id: idContact,
     };
 
-    this.setState(prevState => ({
-      contacts: [contact, ...prevState.contacts],
-    }));
+    const { contacts } = this.state;
+    const findCopyContact = contacts
+      .map(contact => contact.name)
+      .includes(name);
+
+    if (findCopyContact) {
+      alert(`${name} is already in contacts.`);
+    } else {
+      this.setState(prevState => ({
+        contacts: [contact, ...prevState.contacts],
+      }));
+    }
   };
 
   filterChange = event => {
@@ -43,19 +53,27 @@ export class App extends Component {
     });
   };
 
-  render() {
-    const normalizedFilter = this.state.filter.toLowerCase();
-    const filteredContact = this.state.contacts.filter(contact =>
+  getVisibleContact = () => {
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizedFilter),
     );
+  };
+
+  render() {
+    const { filter } = this.state;
+    const { submitFormHandler, filterChange } = this;
+    const visibleContact = this.getVisibleContact();
+
     return (
       <Container>
         <Section title="Phonebook">
-          <ContactForm onSubmit={this.submitFormHandler} />
+          <ContactForm onSubmit={submitFormHandler} />
         </Section>
         <Section title="Contacts">
-          <Filter value={this.state.filter} onChange={this.filterChange} />
-          <ContactList contacts={filteredContact} />
+          <Filter value={filter} onChange={filterChange} />
+          <ContactList contacts={visibleContact} />
         </Section>
       </Container>
     );
