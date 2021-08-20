@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import s from './ContactForm.module.css';
 
 class ContactForm extends Component {
   static defaultProps = {
@@ -38,10 +39,11 @@ class ContactForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor={this.formNameId}>
+      <form className={s.form} onSubmit={this.handleSubmit}>
+        <label className={s.label} htmlFor={this.formNameId}>
           Name{' '}
           <input
+            className={s.input}
             id={this.formNameId}
             type="text"
             name="name"
@@ -50,12 +52,14 @@ class ContactForm extends Component {
             required
             value={this.state.name}
             onChange={this.handleChange}
+            placeholder={'Add name...'}
           />
         </label>
-        <br />
-        <label htmlFor={this.formNumberId}>
+
+        <label className={s.label} htmlFor={this.formNumberId}>
           Number{' '}
           <input
+            className={s.input}
             id={this.formNumberId}
             type="tel"
             name="number"
@@ -64,10 +68,13 @@ class ContactForm extends Component {
             required
             value={this.state.number}
             onChange={this.handleChange}
+            placeholder={'Add phone number...'}
           />
         </label>
-        <br />
-        <button type="submit">Add contact</button>
+
+        <button className={s.button} type="submit">
+          Add contact
+        </button>
       </form>
     );
   }

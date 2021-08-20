@@ -7,6 +7,7 @@ import Container from './Container';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
+import Notification from './Notification';
 
 export class App extends Component {
   static defaultProps = {
@@ -68,7 +69,7 @@ export class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    const { filter, contacts } = this.state;
     const { submitFormHandler, filterChange, deleteContact } = this;
     const visibleContact = this.getVisibleContact();
 
@@ -78,11 +79,15 @@ export class App extends Component {
           <ContactForm onSubmit={submitFormHandler} />
         </Section>
         <Section title="Contacts">
-          <Filter value={filter} onChange={filterChange} />
-          <ContactList
-            contacts={visibleContact}
-            onDeleteContact={deleteContact}
-          />
+          <Filter value={filter} onChange={filterChange}></Filter>
+          {contacts.length > 0 ? (
+            <ContactList
+              contacts={visibleContact}
+              onDeleteContact={deleteContact}
+            ></ContactList>
+          ) : (
+            <Notification message="No contacts"></Notification>
+          )}
         </Section>
       </Container>
     );
@@ -90,5 +95,3 @@ export class App extends Component {
 }
 
 export default App;
-
-// value={value} onChange={onChange}

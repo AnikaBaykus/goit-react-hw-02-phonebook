@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import s from './Filter.module.css';
 
 function Filter({ value, onChange }) {
   const inputID = uuidv4();
 
   return (
     <div>
-      <label htmlFor={inputID}>
+      <label className={s.label} htmlFor={inputID}>
         Find contacts by name{' '}
         <input
+          className={s.input}
           id={inputID}
           type="text"
           value={value}

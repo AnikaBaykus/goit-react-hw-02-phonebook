@@ -1,3 +1,9 @@
+.section {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
 .title {
   font-weight: bold;
   font-size: 18px;
